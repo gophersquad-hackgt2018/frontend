@@ -9,6 +9,8 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import DeleteIcon from "@material-ui/icons/Delete";
+import DownloadIcon from "@material-ui/icons/GetApp";
 
 const styles = theme => ({
     imagePreview: {
@@ -16,12 +18,15 @@ const styles = theme => ({
         display: "flex",
         justifyContent: "center",
         alignItems: "center"
+    },
+    leftIcon: {
+        marginRight: theme.spacing.unit
     }
 });
 
 class DocumentCard extends React.Component {
     render() {
-        const { classes, id, name, loading, previewURL } = this.props;
+        const { classes, id, name, loading, previewURL, url } = this.props;
 
         return (
             <Grid item key={id} sm={6} md={4} lg={3}>
@@ -42,10 +47,21 @@ class DocumentCard extends React.Component {
                         </Typography>
                     </CardContent>
                     <CardActions>
-                        <Button size="small" color="primary" disabled={loading}>
-                            View
+                        <Button
+                            size="small"
+                            color="primary"
+                            disabled={loading}
+                            href={url}
+                        >
+                            <DownloadIcon className={classes.leftIcon} />
+                            Download
                         </Button>
-                        <Button size="small" color="primary" disabled={loading}>
+                        <Button
+                            size="small"
+                            color="secondary"
+                            disabled={loading}
+                        >
+                            <DeleteIcon className={classes.leftIcon} />
                             Remove
                         </Button>
                     </CardActions>
