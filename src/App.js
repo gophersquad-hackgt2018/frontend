@@ -6,20 +6,17 @@ import Typography from "@material-ui/core/Typography";
 import withRoot from "./withRoot";
 import httpClient from "./httpClient";
 import UploadButton from "./components/UploadButton";
+import DocumentCards from "./components/DocumentCards";
 
 const styles = theme => ({
     root: {
         width: "auto",
-        display: "block", // Fix IE 11 issue.
-        marginLeft: theme.spacing.unit * 3,
-        marginRight: theme.spacing.unit * 3,
-        [theme.breakpoints.up(600 + theme.spacing.unit * 3 * 2)]: {
-            width: 600,
-            marginLeft: "auto",
-            marginRight: "auto"
-        }
+        display: "block" // Fix IE 11 issue.
     },
     buttonContainer: {
+        width: 600,
+        marginLeft: "auto",
+        marginRight: "auto",
         display: "flex",
         flexDirection: "column",
         marginTop: theme.spacing.unit * 8,
@@ -98,6 +95,7 @@ class App extends Component {
                         <UploadButton onUpload={this.handleUpload} />
                     )}
                 </Paper>
+                <DocumentCards />
             </div>
         );
     }
