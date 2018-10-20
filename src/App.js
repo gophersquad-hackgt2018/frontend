@@ -4,6 +4,7 @@ import Paper from "@material-ui/core/Paper";
 import { withStyles } from "@material-ui/core/styles";
 import withRoot from "./withRoot";
 import PhotoCameraIcon from "@material-ui/icons/PhotoCamera";
+import httpClient from "./httpClient";
 
 const styles = theme => ({
     root: {
@@ -35,7 +36,21 @@ class App extends Component {
         if (e.target.files && e.target.files.length) {
             // new file uploaded
             const file = e.target.files[0];
-            console.log(file);
+            const formData = new FormData();
+            formData.append("image", file);
+            const config = {
+                headers: {
+                    "content-type": "multipart/form-data"
+                }
+            };
+            httpClient
+                .post("/upload", formData, config)
+                .then(res => {
+                    console.log(res);
+                })
+                .catch(err => {
+                    console.log(err);
+                });
         }
     };
 
