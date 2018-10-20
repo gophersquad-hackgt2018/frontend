@@ -19,7 +19,7 @@ class DocumentCards extends React.Component {
         return (
             <div className={classes.container}>
                 <Grid container>
-                    <DocumentCard cardId={1} />
+                    <DocumentCard cardId={1} loading />
                 </Grid>
             </div>
         );
