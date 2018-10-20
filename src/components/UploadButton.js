@@ -12,7 +12,7 @@ const styles = theme => ({
 
 class UploadButton extends React.Component {
     render() {
-        const { classes, onUpload, inputRef } = this.props;
+        const { classes, onUpload } = this.props;
 
         return (
             <React.Fragment>
@@ -22,7 +22,6 @@ class UploadButton extends React.Component {
                     id="image-input"
                     type="file"
                     capture="camera"
-                    ref={inputRef}
                     onChange={onUpload}
                 />
                 <label htmlFor="image-input">
@@ -36,7 +35,6 @@ class UploadButton extends React.Component {
     }
 }
 UploadButton.propTypes = {
-    inputRef: PropTypes.any.isRequired,
     onUpload: PropTypes.func.isRequired
 };
 

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Paper from "@material-ui/core/Paper";
 import { withStyles } from "@material-ui/core/styles";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import withRoot from "./withRoot";
 import httpClient from "./httpClient";
 import UploadButton from "./components/UploadButton";
@@ -30,12 +31,17 @@ const styles = theme => ({
 class App extends Component {
     constructor(props) {
         super(props);
-        this.input = React.createRef();
+        this.state = {
+            loading: false
+        };
     }
 
     handleUpload = e => {
         if (e.target.files && e.target.files.length) {
             // new file uploaded
+            this.setState({
+                loading: true
+            });
             const file = e.target.files[0];
             const formData = new FormData();
             formData.append("image", file);
@@ -53,21 +59,25 @@ class App extends Component {
                     console.log(err);
                 })
                 .finally(() => {
-                    this.input.current.value = "";
+                    this.setState({
+                        loading: false
+                    });
                 });
         }
     };
 
     render() {
         const { classes } = this.props;
+        const { loading } = this.state;
 
         return (
             <div className={classes.root}>
                 <Paper className={classes.buttonContainer}>
-                    <UploadButton
-                        inputRef={this.input}
-                        onUpload={this.handleUpload}
-                    />
+                    {loading ? (
+                        <CircularProgress />
+                    ) : (
+                        <UploadButton onUpload={this.handleUpload} />
+                    )}
                 </Paper>
             </div>
         );
