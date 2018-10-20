@@ -28,13 +28,16 @@ class DocumentCard extends React.Component {
                 <Card className={classes.card}>
                     <CardMedia
                         className={classes.imagePreview}
-                        image={previewURL}
+                        image={
+                            previewURL ||
+                            "https://www.foot.com/wp-content/uploads/2017/03/placeholder.gif"
+                        }
                         title={name}
                     >
                         {loading && <CircularProgress />}
                     </CardMedia>
                     <CardContent className={classes.cardContent}>
-                        <Typography gutterBottom variant="h5">
+                        <Typography gutterBottom variant="h6">
                             {name}
                         </Typography>
                     </CardContent>

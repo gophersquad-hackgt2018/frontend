@@ -25,7 +25,7 @@ class UploadButton extends React.Component {
                     onChange={onUpload}
                 />
                 <label htmlFor="image-input">
-                    <Button color="primary" component="span">
+                    <Button variant="outlined" color="primary" component="span">
                         <PhotoCameraIcon />
                         &nbsp;Add photo
                     </Button>
