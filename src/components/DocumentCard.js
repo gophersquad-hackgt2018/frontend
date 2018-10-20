@@ -75,7 +75,7 @@ DocumentCard.propTypes = {
     name: PropTypes.string,
     url: PropTypes.string,
     previewURL: PropTypes.string,
-    loading: PropTypes.boolean
+    loading: PropTypes.bool
 };
 
 export default withStyles(styles)(DocumentCard);

@@ -3,10 +3,11 @@ import Paper from "@material-ui/core/Paper";
 import { withStyles } from "@material-ui/core/styles";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Typography from "@material-ui/core/Typography";
+import Grid from "@material-ui/core/Grid";
 import withRoot from "./withRoot";
 import httpClient from "./httpClient";
+import DocumentCard from "./components/DocumentCard";
 import UploadButton from "./components/UploadButton";
-import DocumentCards from "./components/DocumentCards";
 import Footer from "./components/Footer";
 
 const styles = theme => ({
@@ -35,6 +36,12 @@ const styles = theme => ({
     },
     content: {
         flex: "1 0 auto"
+    },
+    cardContainer: {
+        marginTop: theme.spacing.unit * 4,
+        backgroundColor: theme.palette.background.paper,
+        padding: theme.spacing.unit * 4,
+        minHeight: "250px"
     }
 });
 
@@ -42,8 +49,33 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            loading: false
+            loading: false,
+            cardsLoading: true,
+            documents: []
         };
+    }
+
+    componentDidMount() {
+        httpClient
+            .get("/documents")
+            .then(resp => {
+                if (resp.data) {
+                    this.setState({
+                        documents: resp.data.data
+                    });
+                } else {
+                    console.log("No resp.data");
+                }
+            })
+            .catch(err => {
+                // show toast
+                console.log(err);
+            })
+            .finally(() => {
+                this.setState({
+                    cardsLoading: false
+                });
+            });
     }
 
     handleUpload = e => {
@@ -78,7 +110,7 @@ class App extends Component {
 
     render() {
         const { classes } = this.props;
-        const { loading } = this.state;
+        const { loading, cardsLoading, documents } = this.state;
 
         return (
             <div className={classes.root}>
@@ -102,7 +134,17 @@ class App extends Component {
                             <UploadButton onUpload={this.handleUpload} />
                         )}
                     </Paper>
-                    <DocumentCards />
+                    <div className={classes.cardContainer}>
+                        <Grid container spacing={16}>
+                            {cardsLoading ? (
+                                <CircularProgress />
+                            ) : (
+                                documents.map(doc => (
+                                    <DocumentCard {...doc} key={doc._id} />
+                                ))
+                            )}
+                        </Grid>
+                    </div>
                 </div>
                 <Footer />
             </div>
