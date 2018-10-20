@@ -175,10 +175,10 @@ class App extends Component {
                         )}
                     </Paper>
                     <div className={classes.cardContainer}>
-                        <Grid container spacing={16}>
+                        <Grid container spacing={16} justify="center">
                             {cardsLoading ? (
-                                <CircularProgress />
-                            ) : (
+                                <CircularProgress size={70} />
+                            ) : documents.length ? (
                                 documents.map(doc => (
                                     <DocumentCard
                                         key={doc._id}
@@ -191,6 +191,10 @@ class App extends Component {
                                         )}
                                     />
                                 ))
+                            ) : (
+                                <Typography variant="h5" color="textSecondary">
+                                    You haven't uploaded any notes yet!
+                                </Typography>
                             )}
                         </Grid>
                     </div>
