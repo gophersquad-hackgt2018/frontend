@@ -1,10 +1,9 @@
 import React, { Component } from "react";
-import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
 import { withStyles } from "@material-ui/core/styles";
 import withRoot from "./withRoot";
-import PhotoCameraIcon from "@material-ui/icons/PhotoCamera";
 import httpClient from "./httpClient";
+import UploadButton from "./components/UploadButton";
 
 const styles = theme => ({
     root: {
@@ -25,9 +24,6 @@ const styles = theme => ({
         alignItems: "center",
         padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit *
             3}px ${theme.spacing.unit * 3}px`
-    },
-    input: {
-        display: "none"
     }
 });
 
@@ -37,8 +33,7 @@ class App extends Component {
         this.input = React.createRef();
     }
 
-    onFileUpload = e => {
-        console.log("CHANGE");
+    handleUpload = e => {
         if (e.target.files && e.target.files.length) {
             // new file uploaded
             const file = e.target.files[0];
@@ -69,21 +64,10 @@ class App extends Component {
         return (
             <div className={classes.root}>
                 <Paper className={classes.buttonContainer}>
-                    <input
-                        accept="image/*"
-                        className={classes.input}
-                        id="flat-button-file"
-                        type="file"
-                        capture="camera"
-                        ref={this.input}
-                        onChange={this.onFileUpload}
+                    <UploadButton
+                        inputRef={this.input}
+                        onUpload={this.handleUpload}
                     />
-                    <label htmlFor="flat-button-file">
-                        <Button color="secondary" component="span">
-                            <PhotoCameraIcon />
-                            Add photo
-                        </Button>
-                    </label>
                 </Paper>
             </div>
         );
