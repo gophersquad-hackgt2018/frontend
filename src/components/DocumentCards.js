@@ -7,7 +7,8 @@ const styles = theme => ({
     container: {
         marginTop: theme.spacing.unit * 4,
         backgroundColor: theme.palette.background.paper,
-        padding: theme.spacing.unit * 4
+        padding: theme.spacing.unit * 4,
+        minHeight: "250px"
     }
 });
 

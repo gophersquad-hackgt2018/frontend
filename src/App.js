@@ -7,11 +7,14 @@ import withRoot from "./withRoot";
 import httpClient from "./httpClient";
 import UploadButton from "./components/UploadButton";
 import DocumentCards from "./components/DocumentCards";
+import Footer from "./components/Footer";
 
 const styles = theme => ({
     root: {
         width: "auto",
-        display: "block" // Fix IE 11 issue.
+        display: "flex",
+        flexDirection: "column",
+        height: "100%"
     },
     buttonContainer: {
         width: 600,
@@ -29,6 +32,9 @@ const styles = theme => ({
         marginTop: `${theme.spacing.unit * 1}px`,
         marginLeft: `${theme.spacing.unit * 5}px`,
         marginRight: `${theme.spacing.unit * 5}px`
+    },
+    content: {
+        flex: "1 0 auto"
     }
 });
 
@@ -76,26 +82,29 @@ class App extends Component {
 
         return (
             <div className={classes.root}>
-                <Paper className={classes.buttonContainer}>
-                    <Typography variant="h1" align="center" gutterBottom>
-                        Application Title here
-                    </Typography>
-                    <Typography
-                        className={classes.instructions}
-                        align="center"
-                        color="textSecondary"
-                        paragraph
-                    >
-                        Upload image of the math notesheet that you would like
-                        to transcribe
-                    </Typography>
-                    {loading ? (
-                        <CircularProgress />
-                    ) : (
-                        <UploadButton onUpload={this.handleUpload} />
-                    )}
-                </Paper>
-                <DocumentCards />
+                <div className={classes.content}>
+                    <Paper className={classes.buttonContainer}>
+                        <Typography variant="h1" align="center" gutterBottom>
+                            Application Title here
+                        </Typography>
+                        <Typography
+                            className={classes.instructions}
+                            align="center"
+                            color="textSecondary"
+                            paragraph
+                        >
+                            Upload image of the math notesheet that you would
+                            like to transcribe
+                        </Typography>
+                        {loading ? (
+                            <CircularProgress />
+                        ) : (
+                            <UploadButton onUpload={this.handleUpload} />
+                        )}
+                    </Paper>
+                    <DocumentCards />
+                </div>
+                <Footer />
             </div>
         );
     }
