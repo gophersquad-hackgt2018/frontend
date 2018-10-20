@@ -32,7 +32,13 @@ const styles = theme => ({
 });
 
 class App extends Component {
+    constructor(props) {
+        super(props);
+        this.input = React.createRef();
+    }
+
     onFileUpload = e => {
+        console.log("CHANGE");
         if (e.target.files && e.target.files.length) {
             // new file uploaded
             const file = e.target.files[0];
@@ -50,6 +56,9 @@ class App extends Component {
                 })
                 .catch(err => {
                     console.log(err);
+                })
+                .finally(() => {
+                    this.input.current.value = "";
                 });
         }
     };
@@ -66,6 +75,7 @@ class App extends Component {
                         id="flat-button-file"
                         type="file"
                         capture="camera"
+                        ref={this.input}
                         onChange={this.onFileUpload}
                     />
                     <label htmlFor="flat-button-file">
