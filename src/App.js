@@ -85,7 +85,7 @@ class App extends Component {
                 <div className={classes.content}>
                     <Paper className={classes.buttonContainer}>
                         <Typography variant="h1" align="center" gutterBottom>
-                            IcoMath
+                            IsoMath
                         </Typography>
                         <Typography
                             className={classes.instructions}
