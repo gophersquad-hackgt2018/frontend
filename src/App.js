@@ -4,7 +4,6 @@ import Paper from "@material-ui/core/Paper";
 import { withStyles } from "@material-ui/core/styles";
 import withRoot from "./withRoot";
 import PhotoCameraIcon from "@material-ui/icons/PhotoCamera";
-import CloudIcon from "@material-ui/icons/CloudUpload";
 
 const styles = theme => ({
     root: {
@@ -25,25 +24,41 @@ const styles = theme => ({
         alignItems: "center",
         padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit *
             3}px ${theme.spacing.unit * 3}px`
+    },
+    input: {
+        display: "none"
     }
 });
 
 class App extends Component {
+    onFileUpload = e => {
+        if (e.target.files && e.target.files.length) {
+            // new file uploaded
+            const file = e.target.files[0];
+            console.log(file);
+        }
+    };
+
     render() {
         const { classes } = this.props;
-        console.log(classes);
 
         return (
             <div className={classes.root}>
                 <Paper className={classes.buttonContainer}>
-                    <Button color="primary">
-                        <PhotoCameraIcon />
-                        Take Photo
-                    </Button>
-                    <Button color="secondary">
-                        <CloudIcon />
-                        Upload file
-                    </Button>
+                    <input
+                        accept="image/*"
+                        className={classes.input}
+                        id="flat-button-file"
+                        type="file"
+                        capture="camera"
+                        onChange={this.onFileUpload}
+                    />
+                    <label htmlFor="flat-button-file">
+                        <Button color="secondary" component="span">
+                            <PhotoCameraIcon />
+                            Add photo
+                        </Button>
+                    </label>
                 </Paper>
             </div>
         );
