@@ -78,6 +78,21 @@ class App extends Component {
             });
     }
 
+    handleDocumentDelete = id => async () => {
+        try {
+            await httpClient.delete("/documents", {
+                data: {
+                    id
+                }
+            });
+            this.setState(state => ({
+                documents: state.documents.filter(doc => doc._id !== id)
+            }));
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
     handleUpload = async e => {
         if (e.target.files && e.target.files.length) {
             // new file uploaded
@@ -94,7 +109,6 @@ class App extends Component {
             };
             try {
                 const res = await httpClient.post("/upload", formData, config);
-                console.log(res);
                 const docId = res.data.id;
                 this.setState(state => ({
                     documents: [
@@ -166,7 +180,16 @@ class App extends Component {
                                 <CircularProgress />
                             ) : (
                                 documents.map(doc => (
-                                    <DocumentCard {...doc} key={doc._id} />
+                                    <DocumentCard
+                                        key={doc._id}
+                                        name={doc.name}
+                                        id={doc._id}
+                                        url={doc.url}
+                                        loading={doc.loading}
+                                        onDelete={this.handleDocumentDelete(
+                                            doc._id
+                                        )}
+                                    />
                                 ))
                             )}
                         </Grid>

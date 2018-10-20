@@ -11,6 +11,9 @@ import Button from "@material-ui/core/Button";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import DeleteIcon from "@material-ui/icons/Delete";
 import DownloadIcon from "@material-ui/icons/GetApp";
+import Dialog from "@material-ui/core/Dialog";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import DialogActions from "@material-ui/core/DialogActions";
 
 const styles = theme => ({
     imagePreview: {
@@ -25,48 +28,98 @@ const styles = theme => ({
 });
 
 class DocumentCard extends React.Component {
+    state = {
+        deleteDialogOpen: false
+    };
+
+    handleDeleteClose = () => {
+        this.setState({
+            deleteDialogOpen: false
+        });
+    };
+
+    handleDeleteConfirm = () => {
+        this.props.onDelete();
+        this.setState({
+            deleteDialogOpen: false
+        });
+    };
+
+    handleDeleteClick = () => {
+        this.setState({
+            deleteDialogOpen: true
+        });
+    };
+
     render() {
         const { classes, id, name, loading, previewURL, url } = this.props;
+        const { deleteDialogOpen } = this.state;
 
         return (
-            <Grid item key={id} sm={6} md={4} lg={3}>
-                <Card className={classes.card}>
-                    <CardMedia
-                        className={classes.imagePreview}
-                        image={
-                            previewURL ||
-                            "https://www.foot.com/wp-content/uploads/2017/03/placeholder.gif"
-                        }
-                        title={name}
-                    >
-                        {loading && <CircularProgress />}
-                    </CardMedia>
-                    <CardContent className={classes.cardContent}>
-                        <Typography gutterBottom variant="h6">
-                            {name}
-                        </Typography>
-                    </CardContent>
-                    <CardActions>
-                        <Button
-                            size="small"
-                            color="primary"
-                            disabled={loading}
-                            href={url}
+            <React.Fragment>
+                <Grid item key={id} sm={6} md={4} lg={3}>
+                    <Card className={classes.card}>
+                        <CardMedia
+                            className={classes.imagePreview}
+                            image={
+                                previewURL ||
+                                "https://www.foot.com/wp-content/uploads/2017/03/placeholder.gif"
+                            }
+                            title={name}
                         >
-                            <DownloadIcon className={classes.leftIcon} />
-                            Download
-                        </Button>
+                            {loading && <CircularProgress />}
+                        </CardMedia>
+                        <CardContent className={classes.cardContent}>
+                            <Typography gutterBottom variant="h6">
+                                {name}
+                            </Typography>
+                        </CardContent>
+                        <CardActions>
+                            <Button
+                                size="small"
+                                color="primary"
+                                disabled={loading}
+                                href={url}
+                            >
+                                <DownloadIcon className={classes.leftIcon} />
+                                Download
+                            </Button>
+                            <Button
+                                size="small"
+                                color="secondary"
+                                onClick={this.handleDeleteClick}
+                                disabled={loading}
+                            >
+                                <DeleteIcon className={classes.leftIcon} />
+                                Remove
+                            </Button>
+                        </CardActions>
+                    </Card>
+                </Grid>
+                <Dialog
+                    open={deleteDialogOpen}
+                    onClose={this.handleDeleteClose}
+                    aria-labelledby="delete-dialog-title"
+                >
+                    <DialogTitle id="delete-dialog-title">
+                        Are you sure you want to delete this document?
+                    </DialogTitle>
+                    <DialogActions>
                         <Button
-                            size="small"
                             color="secondary"
-                            disabled={loading}
+                            onClick={this.handleDeleteClose}
                         >
-                            <DeleteIcon className={classes.leftIcon} />
-                            Remove
+                            No
                         </Button>
-                    </CardActions>
-                </Card>
-            </Grid>
+                        <Button
+                            color="primary"
+                            onClick={this.handleDeleteConfirm}
+                        >
+                            Yes
+                        </Button>
+                    </DialogActions>
+                </Dialog>
+            </React.Fragment>
         );
     }
 }
@@ -75,7 +128,8 @@ DocumentCard.propTypes = {
     name: PropTypes.string,
     url: PropTypes.string,
     previewURL: PropTypes.string,
-    loading: PropTypes.bool
+    loading: PropTypes.bool,
+    onDelete: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(DocumentCard);
