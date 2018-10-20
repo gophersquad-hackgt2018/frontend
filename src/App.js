@@ -78,7 +78,7 @@ class App extends Component {
             });
     }
 
-    handleUpload = e => {
+    handleUpload = async e => {
         if (e.target.files && e.target.files.length) {
             // new file uploaded
             this.setState({
@@ -92,19 +92,45 @@ class App extends Component {
                     "content-type": "multipart/form-data"
                 }
             };
-            httpClient
-                .post("/upload", formData, config)
-                .then(res => {
-                    console.log(res);
-                })
-                .catch(err => {
-                    console.log(err);
-                })
-                .finally(() => {
-                    this.setState({
-                        loading: false
-                    });
+            try {
+                const res = await httpClient.post("/upload", formData, config);
+                console.log(res);
+                const docId = res.data.id;
+                this.setState(state => ({
+                    documents: [
+                        {
+                            loading: true,
+                            _id: docId
+                        }
+                    ].concat(state.documents)
+                }));
+                const socket = new WebSocket(process.env.REACT_APP_WS_URL);
+                socket.addEventListener("open", function(event) {
+                    socket.send(docId);
                 });
+                socket.addEventListener("message", data => {
+                    const doc = JSON.parse(data.data);
+                    this.setState(state => {
+                        const { documents } = this.state;
+                        for (let idx = 0; idx < documents.length; idx++) {
+                            if (documents[idx]._id == docId) {
+                                return {
+                                    documents: Object.assign([], documents, {
+                                        [idx]: doc
+                                    })
+                                };
+                            }
+                        }
+                        return {};
+                    });
+                    socket.close();
+                });
+            } catch (err) {
+                console.log(err);
+            }
+            this.setState({
+                loading: false
+            });
         }
     };
 
