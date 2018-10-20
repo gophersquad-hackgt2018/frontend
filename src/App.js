@@ -85,7 +85,7 @@ class App extends Component {
                 <div className={classes.content}>
                     <Paper className={classes.buttonContainer}>
                         <Typography variant="h1" align="center" gutterBottom>
-                            Application Title here
+                            IcoMath
                         </Typography>
                         <Typography
                             className={classes.instructions}
@@ -93,7 +93,7 @@ class App extends Component {
                             color="textSecondary"
                             paragraph
                         >
-                            Upload image of the math notesheet that you would
+                            Upload an image of the math notesheet that you would
                             like to transcribe
                         </Typography>
                         {loading ? (
