@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Paper from "@material-ui/core/Paper";
 import { withStyles } from "@material-ui/core/styles";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import Typography from "@material-ui/core/Typography";
 import withRoot from "./withRoot";
 import httpClient from "./httpClient";
 import UploadButton from "./components/UploadButton";
@@ -25,6 +26,12 @@ const styles = theme => ({
         alignItems: "center",
         padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit *
             3}px ${theme.spacing.unit * 3}px`
+    },
+    instructions: {
+        fontSize: "16px",
+        marginTop: `${theme.spacing.unit * 1}px`,
+        marginLeft: `${theme.spacing.unit * 5}px`,
+        marginRight: `${theme.spacing.unit * 5}px`
     }
 });
 
@@ -73,6 +80,18 @@ class App extends Component {
         return (
             <div className={classes.root}>
                 <Paper className={classes.buttonContainer}>
+                    <Typography variant="h1" align="center" gutterBottom>
+                        Application Title here
+                    </Typography>
+                    <Typography
+                        className={classes.instructions}
+                        align="center"
+                        color="textSecondary"
+                        paragraph
+                    >
+                        Upload image of the math notesheet that you would like
+                        to transcribe
+                    </Typography>
                     {loading ? (
                         <CircularProgress />
                     ) : (

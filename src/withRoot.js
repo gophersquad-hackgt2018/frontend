@@ -4,7 +4,10 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 
 const theme = createMuiTheme({
     typography: {
-        useNextVariants: true
+        useNextVariants: true,
+        h1: {
+            fontSize: "2em"
+        }
     }
 });
 
@@ -14,7 +17,6 @@ function withRoot(Component) {
         // thanks to React context.
         return (
             <MuiThemeProvider theme={theme}>
-                {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
                 <CssBaseline />
                 <Component {...props} />
             </MuiThemeProvider>
