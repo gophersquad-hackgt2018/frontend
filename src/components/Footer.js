@@ -14,6 +14,10 @@ const styles = theme => ({
     text: {
         display: "flex",
         alignItems: "center"
+    },
+    icon: {
+        marginLeft: theme.spacing.unit,
+        marginRight: theme.spacing.unit
     }
 });
 
@@ -29,9 +33,9 @@ class Footer extends React.Component {
                     color="textSecondary"
                     className={classes.text}
                 >
-                    Made with&nbsp;
-                    <FavouriteIcon />
-                    &nbsp;@HackGT
+                    Made with
+                    <FavouriteIcon className={classes.icon} />
+                    @HackGT
                 </Typography>
             </footer>
         );
