@@ -63,6 +63,7 @@ class App extends Component {
             .get("/documents")
             .then(resp => {
                 if (resp.data) {
+                    console.log(resp.data.data);
                     this.setState({
                         documents: resp.data.data
                     });
@@ -126,6 +127,7 @@ class App extends Component {
                 });
                 socket.addEventListener("message", data => {
                     const doc = JSON.parse(data.data);
+                    console.log(doc);
                     this.setState(state => {
                         const { documents } = this.state;
                         for (let idx = 0; idx < documents.length; idx++) {
@@ -175,31 +177,34 @@ class App extends Component {
                             <UploadButton onUpload={this.handleUpload} />
                         )}
                     </Paper>
-                    <div className={classes.cardContainer}>
-                        <Grid container spacing={16} justify="center">
-                            {cardsLoading ? (
-                                <CircularProgress size={70} />
-                            ) : documents.length ? (
-                                documents.map(doc => (
-                                    <DocumentCard
-                                        key={doc._id}
-                                        name={doc.name}
-                                        id={doc._id}
-                                        url={doc.url}
-                                        previewURL={doc.previewURL}
-                                        loading={doc.loading}
-                                        onDelete={this.handleDocumentDelete(
-                                            doc._id
-                                        )}
-                                    />
-                                ))
-                            ) : (
-                                <Typography variant="h5" color="textSecondary">
-                                    You haven't uploaded any notes yet!
-                                </Typography>
-                            )}
-                        </Grid>
-                    </div>
+                    <Grid
+                        container
+                        spacing={16}
+                        justify="center"
+                        className={classes.cardContainer}
+                    >
+                        {cardsLoading ? (
+                            <CircularProgress size={70} />
+                        ) : documents.length ? (
+                            documents.map(doc => (
+                                <DocumentCard
+                                    key={doc._id}
+                                    name={doc.name}
+                                    id={doc._id}
+                                    url={doc.url}
+                                    previewURL={doc.previewURL}
+                                    loading={doc.loading}
+                                    onDelete={this.handleDocumentDelete(
+                                        doc._id
+                                    )}
+                                />
+                            ))
+                        ) : (
+                            <Typography variant="h5" color="textSecondary">
+                                You haven't uploaded any notes yet!
+                            </Typography>
+                        )}
+                    </Grid>
                 </div>
                 <Footer />
             </div>

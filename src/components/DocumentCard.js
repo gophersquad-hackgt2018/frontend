@@ -30,7 +30,11 @@ const styles = theme => ({
     loaderContainer: {
         height: "150px",
         textAlign: "center",
-        paddingTop: theme.spacing.unit * 5
+        paddingTop: theme.spacing.unit * 5,
+        display: "block"
+    },
+    card: {
+        width: "100%"
     }
 });
 
@@ -64,12 +68,19 @@ class DocumentCard extends React.Component {
 
         return (
             <React.Fragment>
-                <Grid item key={id} sm={6} md={4} lg={3}>
+                <Grid
+                    item
+                    key={id}
+                    sm={6}
+                    md={4}
+                    lg={3}
+                    className={classes.container}
+                >
                     <Card className={classes.card}>
                         {loading ? (
-                            <div className={classes.loaderContainer}>
+                            <CardMedia className={classes.loaderContainer}>
                                 <CircularProgress />
-                            </div>
+                            </CardMedia>
                         ) : (
                             <CardMedia
                                 className={classes.imagePreview}
