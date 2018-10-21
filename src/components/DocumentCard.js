@@ -14,6 +14,8 @@ import DownloadIcon from "@material-ui/icons/GetApp";
 import Dialog from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import CardActionArea from "@material-ui/core/CardActionArea";
 
 const styles = theme => ({
     imagePreview: {
@@ -35,12 +37,24 @@ const styles = theme => ({
     },
     card: {
         width: "100%"
+    },
+    previewContainer: {
+        width: "600px",
+        backgroundColor: theme.palette.background.paper,
+        boxShadow: theme.shadows[5],
+        padding: theme.spacing.unit * 4
+    },
+    previewImage: {
+        objectFit: "contain",
+        maxWidth: "100%",
+        maxHeight: "100%"
     }
 });
 
 class DocumentCard extends React.Component {
     state = {
-        deleteDialogOpen: false
+        deleteDialogOpen: false,
+        previewOpen: false
     };
 
     handleDeleteClose = () => {
@@ -62,9 +76,21 @@ class DocumentCard extends React.Component {
         });
     };
 
+    handlePreviewClick = () => {
+        this.setState({
+            previewOpen: true
+        });
+    };
+
+    handlePreviewClose = () => {
+        this.setState({
+            previewOpen: false
+        });
+    };
+
     render() {
         const { classes, id, name, loading, previewURL, url } = this.props;
-        const { deleteDialogOpen } = this.state;
+        const { deleteDialogOpen, previewOpen } = this.state;
 
         return (
             <React.Fragment>
@@ -82,15 +108,17 @@ class DocumentCard extends React.Component {
                                 <CircularProgress />
                             </CardMedia>
                         ) : (
-                            <CardMedia
-                                className={classes.imagePreview}
-                                component="img"
-                                src={
-                                    previewURL ||
-                                    "https://www.foot.com/wp-content/uploads/2017/03/placeholder.gif"
-                                }
-                                title={name}
-                            />
+                            <CardActionArea onClick={this.handlePreviewClick}>
+                                <CardMedia
+                                    className={classes.imagePreview}
+                                    component="img"
+                                    src={
+                                        previewURL ||
+                                        "https://www.foot.com/wp-content/uploads/2017/03/placeholder.gif"
+                                    }
+                                    title={name}
+                                />
+                            </CardActionArea>
                         )}
                         <CardContent className={classes.cardContent}>
                             <Typography gutterBottom variant="h6">
@@ -141,6 +169,15 @@ class DocumentCard extends React.Component {
                             Yes
                         </Button>
                     </DialogActions>
+                </Dialog>
+                <Dialog open={previewOpen} onClose={this.handlePreviewClose}>
+                    <DialogContent className={classes.previewContainer}>
+                        <img
+                            src={previewURL}
+                            className={classes.previewImage}
+                            alt="Preview of pdf document"
+                        />
+                    </DialogContent>
                 </Dialog>
             </React.Fragment>
         );
