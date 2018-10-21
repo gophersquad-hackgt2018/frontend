@@ -185,6 +185,7 @@ class App extends Component {
                                         name={doc.name}
                                         id={doc._id}
                                         url={doc.url}
+                                        previewURL={doc.previewURL}
                                         loading={doc.loading}
                                         onDelete={this.handleDocumentDelete(
                                             doc._id
