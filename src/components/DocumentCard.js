@@ -26,6 +26,11 @@ const styles = theme => ({
     },
     leftIcon: {
         marginRight: theme.spacing.unit
+    },
+    loaderContainer: {
+        height: "150px",
+        textAlign: "center",
+        paddingTop: theme.spacing.unit * 5
     }
 });
 
@@ -61,17 +66,21 @@ class DocumentCard extends React.Component {
             <React.Fragment>
                 <Grid item key={id} sm={6} md={4} lg={3}>
                     <Card className={classes.card}>
-                        <CardMedia
-                            className={classes.imagePreview}
-                            component="img"
-                            src={
-                                previewURL ||
-                                "https://www.foot.com/wp-content/uploads/2017/03/placeholder.gif"
-                            }
-                            title={name}
-                        >
-                            {loading && <CircularProgress />}
-                        </CardMedia>
+                        {loading ? (
+                            <div className={classes.loaderContainer}>
+                                <CircularProgress />
+                            </div>
+                        ) : (
+                            <CardMedia
+                                className={classes.imagePreview}
+                                component="img"
+                                src={
+                                    previewURL ||
+                                    "https://www.foot.com/wp-content/uploads/2017/03/placeholder.gif"
+                                }
+                                title={name}
+                            />
+                        )}
                         <CardContent className={classes.cardContent}>
                             <Typography gutterBottom variant="h6">
                                 {name}

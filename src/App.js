@@ -96,12 +96,12 @@ class App extends Component {
         }
     };
 
-    handleUpload = async e => {
+    handleUpload = e => {
         if (e.target.files && e.target.files.length) {
             // new file uploaded
-            this.setState({
+            this.setState(state => ({
                 loading: true
-            });
+            }));
             const file = e.target.files[0];
             const formData = new FormData();
             formData.append("image", file);
@@ -110,8 +110,7 @@ class App extends Component {
                     "content-type": "multipart/form-data"
                 }
             };
-            try {
-                const res = await httpClient.post("/upload", formData, config);
+            httpClient.post("/upload", formData, config).then(res => {
                 const docId = res.data.id;
                 this.setState(state => ({
                     documents: [
@@ -134,7 +133,8 @@ class App extends Component {
                                 return {
                                     documents: Object.assign([], documents, {
                                         [idx]: doc
-                                    })
+                                    }),
+                                    loading: false
                                 };
                             }
                         }
@@ -142,9 +142,7 @@ class App extends Component {
                     });
                     socket.close();
                 });
-            } catch (err) {
-                console.log(err);
-            }
+            });
             this.setState({
                 loading: false
             });
