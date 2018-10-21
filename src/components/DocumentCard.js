@@ -19,6 +19,7 @@ const styles = theme => ({
     imagePreview: {
         objectFit: "cover",
         objectPosition: "0 0",
+        height: "150px",
         display: "flex",
         justifyContent: "center",
         alignItems: "center"
@@ -62,12 +63,11 @@ class DocumentCard extends React.Component {
                     <Card className={classes.card}>
                         <CardMedia
                             className={classes.imagePreview}
-                            image={
+                            component="img"
+                            src={
                                 previewURL ||
                                 "https://www.foot.com/wp-content/uploads/2017/03/placeholder.gif"
                             }
-                            height="150"
-                            component="img"
                             title={name}
                         >
                             {loading && <CircularProgress />}

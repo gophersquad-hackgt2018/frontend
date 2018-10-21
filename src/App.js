@@ -18,7 +18,7 @@ const styles = theme => ({
         height: "100%"
     },
     buttonContainer: {
-        width: 600,
+        width: "auto",
         marginLeft: "auto",
         marginRight: "auto",
         display: "flex",
@@ -35,7 +35,10 @@ const styles = theme => ({
         marginRight: `${theme.spacing.unit * 5}px`
     },
     content: {
-        flex: "1 0 auto"
+        flex: "1 0 auto",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center"
     },
     cardContainer: {
         marginTop: theme.spacing.unit * 4,
@@ -127,7 +130,7 @@ class App extends Component {
                     this.setState(state => {
                         const { documents } = this.state;
                         for (let idx = 0; idx < documents.length; idx++) {
-                            if (documents[idx]._id == docId) {
+                            if (documents[idx]._id === docId) {
                                 return {
                                     documents: Object.assign([], documents, {
                                         [idx]: doc
