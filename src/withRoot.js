@@ -8,6 +8,20 @@ const theme = createMuiTheme({
         h1: {
             fontSize: "2em"
         }
+    },
+    palette: {
+        primary: {
+            main: "#1976d2",
+            light: "#63a4ff",
+            dark: "#004ba0",
+            contrast: "#fff"
+        },
+        secondary: {
+            main: "#e53935",
+            light: "#ff6f60",
+            dark: "#ab000d",
+            contrast: "#000"
+        }
     }
 });
 

@@ -9,11 +9,13 @@ const styles = theme => ({
         paddingRight: theme.spacing.unit * 6,
         paddingTop: theme.spacing.unit * 3,
         paddingBottom: theme.spacing.unit * 3,
-        flexShrink: 0
+        flexShrink: 0,
+        backgroundColor: theme.palette.primary.dark
     },
     text: {
         display: "flex",
-        alignItems: "center"
+        alignItems: "center",
+        color: "#fff !important"
     },
     icon: {
         marginLeft: theme.spacing.unit,
