@@ -17,7 +17,8 @@ import DialogActions from "@material-ui/core/DialogActions";
 
 const styles = theme => ({
     imagePreview: {
-        height: "150px",
+        objectFit: "cover",
+        objectPosition: "0 0",
         display: "flex",
         justifyContent: "center",
         alignItems: "center"
@@ -65,6 +66,8 @@ class DocumentCard extends React.Component {
                                 previewURL ||
                                 "https://www.foot.com/wp-content/uploads/2017/03/placeholder.gif"
                             }
+                            height="150"
+                            component="img"
                             title={name}
                         >
                             {loading && <CircularProgress />}
